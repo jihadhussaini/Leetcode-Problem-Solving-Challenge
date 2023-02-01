@@ -22,6 +22,8 @@ Output: false
 */
 
 let s = "([}}])"
+
+// first try
 var isValid = function(s) {
     let temp = []
     if (s.length % 2 !== 0) return false;
@@ -58,5 +60,29 @@ var isValid = function(s) {
     if (temp.length == 0) return true;
     else return false;
 };
+
+// second solution
+var isValid = function(s) {
+    let pair = {
+        "(": ")",
+        "{": "}",
+        "[": "]"
+    };
+    let stack = [];
+
+    if (s.length % 2 !== 0) return false;
+    if (s[0] == ")" || s[0] == "}" || s[0] == "]") return false;
+    if (s[s.length-1] == "(" || s[s.length-1] == "{" || s[s.length-1] == "[") return false;
+    
+    for (let i=0; i<s.length; i++) {
+        if (s[i] == "(" || s[i] == "{" || s[i] == "[") {
+            stack.push(s[i]);
+        } else if (pair[stack.pop()] !== s[i]) {
+            return false;
+        }
+    }
+    return stack.length == 0;
+}
+
 
 console.log(isValid(s))
